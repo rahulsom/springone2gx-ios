@@ -1,0 +1,4 @@
+= Better iOS development with Groovy
+Rahul Somasunderam <rahul.som@gmail.com>
+:imagesdir: images
+:sourcedir: snippets
