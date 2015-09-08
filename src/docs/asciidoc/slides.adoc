@@ -2,3 +2,45 @@
 Rahul Somasunderam <rahul.som@gmail.com>
 :imagesdir: images
 :sourcedir: snippets
+:revealjs_slideNumber: true
+
+== About me
+[NOTE.speaker]
+--
+. Been programming with Java, Groovy, Objective-C
+. lgtm.in, ihe-iti, swaggydoc
+. Web developers vs Android/iOS/griffon developers?
+. Groovy experience vs java developers?
+. How far into the future/past is iOS for you?
+. Who has written Functional tests?
+. Whose employer's primary business is developing software?
+--
+
+== Where I work
+image::BoxCutter.png[]
+[NOTE.speaker]
+--
+* Transcend insights
+* Used by 130 Health Systems, 600 Hospitals, 20K physicians
+* We love groovy
+--
+
+[data-background="images/Technologies_All.png"]
+=== &nbsp;
+[NOTE.speaker]
+--
+This is all the technologies we've had over the years
+--
+
+[data-background="images/Technologies_Active.png"]
+=== &nbsp;
+[NOTE.speaker]
+--
+This is what's survived.
+--
+
+== Why iOS?
+
+And why at a _this_ conference?
+
+== What does it take to build an iOS app?
