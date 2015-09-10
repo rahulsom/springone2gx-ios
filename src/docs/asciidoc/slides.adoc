@@ -3,6 +3,11 @@ Rahul Somasunderam <rahul.som@gmail.com>
 :imagesdir: images
 :sourcedir: snippets
 :revealjs_slideNumber: true
+:source-highlighter: highlightjs
+
+++++
+<link rel="stylesheet" href="styles/override.css">
+++++
 
 == About me
 [NOTE.speaker]
@@ -17,7 +22,7 @@ Rahul Somasunderam <rahul.som@gmail.com>
 --
 
 == Where I work
-image::BoxCutter.png[]
+image::BoxCutter.png[role="thumb"]
 [NOTE.speaker]
 --
 * Transcend insights
@@ -44,3 +49,207 @@ This is what's survived.
 And why at a _this_ conference?
 
 == What does it take to build an iOS app?
+
+[NOTE.speaker]
+--
+So you just heard that you (or your team) will be doing iOS work.
+Also let's assume that you want to build a native iOS app.
+Not sencha, phonegap, appcelerator, robovm, ionic.
+--
+
+== XCode or AppCode
+
+[NOTE.speaker]
+--
+* This is often a question of personal preference.
+* XCode is just an editor fitted with some autocomplete and a compiler.
+* AppCode is everything IntelliJ IDEA does (for Objective-C)
+* AppCode support for UI is still not as good as XCode.
+--
+
+== Swift vs Objective-C
+
+[%step]
+* Tooling
+* Libraries
+
+[NOTE.speaker]
+--
+* This is a question of team choices. But you have choices.
+* OCLint is very mature. SwiftLint is rather new.
+* AppCode support for Swift is very basic.
+* A majority of pods out there are still Objective-C and some
+  just cannot support Swift.
+--
+
+== Dependency management
+
+[%step]
+* Libraries vs frameworks
+
+[data-background="images/matryoshka.jpg"]
+=== &nbsp;
+
+=== &nbsp;
+_And I don't mean transitive dependencies..._
+
+=== Dependencies
+
+[%step]
+* Your app needs dependencies
+* Dependencies can be installed with Cocoapods
+* Cocoapods is a ruby gem
+* Ruby gems can be installed with Bundler
+* You WANT ruby in the user space; so RBENV
+* There is a brew formula for RBENV
+* brew is installed using system ruby
+
+== Build Tools
+
+Not 10 bullet points telling you to point and click at things.
+
+[data-background="images/firstday.jpg"]
+=== &nbsp;
+
+=== XcodeBuild
+
+[source,bash]
+----
+xcodebuild \
+    -scheme Todos \
+    -workspace Todos.xcworkspace \
+    -sdk iphonesimulator \
+    -configuration Debug \
+    DSTROOT=/Users/rahul/src/Todos/build/dst \
+    OBJROOT=/Users/rahul/src/Todos/build/obj \
+    SYMROOT=/Users/rahul/src/Todos/build/sym \
+    SHARED_PRECOMPS_DIR=/Users/rahul/src/Todos/build/shared \
+    -destination \
+    'platform=iOS Simulator,id=CAB835ED-3EE2-47B6-AD74-C06675651CEF' \
+    test
+----
+
+=== XcodeBuild
+
+[%step]
+* Too complex commands - Unruly bash scripts
+* Different tools for build, upload to testflight, hockeyapp
+* Very little documentation, very steep learning curve
+* What about functional testing?
+
+=== xctool
+
+[source,bash]
+----
+xctool \
+    -workspace Todos.xcworkspace \
+    -sdk iphonesimulator \
+    -scheme Todos \
+    test
+----
+
+=== xctool
+
+[%step]
+* Written in Objective-C
+* Needs advanced knowledge of Objective-C
+* What about functional testing?
+
+[NOTE.speaker]
+--
+* Written by facebook
+--
+
+=== Nomad CLI
+
+[source,bash]
+----
+shenzen \
+    -workspace Todos.xcworkspace \
+    -sdk iphonesimulator \
+    -scheme Todos \
+    test
+----
+
+=== Nomad CLI
+
+[%step]
+* Written in ruby
+* Great support for certificates, distribution profiles
+* Great support for distribution using iTunesConnect
+* What about functional testing?
+
+[NOTE.speaker]
+--
+* Written by facebook
+--
+
+=== What we need
+
+[%step]
+* Flexible build system
+* Support for distribution
+* Support for functional testing
+* Easy to install, even if you're an enterprise software company
+* Easy to run
+
+[NOTE.speaker]
+--
+* Time to Yosemite
+--
+
+=== Gradle Xcode Plugin
+
+[source,gradle]
+----
+buildscript {
+  repositories {
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+  dependencies {
+    classpath "gradle.plugin.org.openbakery:xcodePlugin:0.11.3"
+  }
+}
+apply plugin: "org.openbakery.xcodeplugin"
+xcodebuild {
+  workspace = 'Todos.xcworkspace'
+  scheme = 'Todos'
+  target = 'Todos'
+  sdk = 'iphonesimulator'
+}
+----
+
+=== Gradle Xcode Plugin
+
+[source,bash]
+----
+./gradlew xcodetest
+./gradlew appstoreUpload
+----
+
+== Functional Testing
+
+=== UIAutomation using Instruments
+
+* Record and Playback
+* DOM Tree access
+* Refactoring
+* Managing State
+* Tuneup JS? Bwoken?
+
+=== Appium
+
+* Based on Selenium
+* Clients for several languages including Java
+* Makes your app stateless
+
+=== Groovy + Spock
+
+* Spock's expressive testing
+* Groovy's metaprogramming to improve access to DOM
+
+== Code
+
+https://github.com/rahulsom/todos-ios/
+
+== Thanks
