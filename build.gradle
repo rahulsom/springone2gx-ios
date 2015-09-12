@@ -82,7 +82,7 @@ asciidoctor {
   gemPath = jrubyPrepareGems.outputDir
   requires = ['asciidoctor-diagram']
   sources {
-    include 'slides.adoc'
+    include 'index.adoc'
   }
   resources {
     from(sourceDir) {
