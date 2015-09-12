@@ -12,7 +12,7 @@ buildscript {
     classpath 'org.ysb33r.gradle:vfs-gradle-plugin:1.0-beta1'
     classpath 'commons-httpclient:commons-httpclient:3.1'
     classpath 'com.bluepapa32:gradle-watch-plugin:0.1.4'
-    classpath 'org.ajoberstar:gradle-git:1.1.0'
+    classpath 'org.ajoberstar:gradle-git:1.3.0'
   }
 }
 
@@ -29,6 +29,10 @@ githubPages {
   pages {
     from file("$buildDir/asciidoc/html5")
   }
+  credentials {
+    username = System.getenv('GH_TOKEN')
+    password = '\n'
+  }
 }
 
 version = '1.0.0'
@@ -44,7 +48,7 @@ repositories {
 }
 
 dependencies {
-  gems 'rubygems:asciidoctor-diagram:1.3.0.preview.3'
+  gems 'rubygems:asciidoctor-diagram:1.3.0'
   gems 'rubygems:slim:2.1.0'
   gems 'rubygems:thread_safe:0.3.4'
 }
