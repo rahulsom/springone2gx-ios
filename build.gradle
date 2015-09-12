@@ -1,4 +1,4 @@
-import org.ajoberstar.grgit.*
+import org.ajoberstar.grgit.Grgit
 
 buildscript {
   repositories {
@@ -25,13 +25,12 @@ apply plugin: 'uk.co.cacoethes.lazybones-templates'
 apply plugin: 'org.ajoberstar.github-pages'
 
 githubPages {
-    repoUri = 'git@github.com:rahulsom/springone2gx-ios.git'
-    pages {
-        from file("$buildDir/asciidoc/html5")
-    }
+  repoUri = 'git@github.com:rahulsom/springone2gx-ios.git'
+  pages {
+    from file("$buildDir/asciidoc/html5")
+  }
 }
 
-publishGhPages.dependsOn(asciidoctor)
 version = '1.0.0'
 
 ext {
@@ -53,24 +52,24 @@ dependencies {
 task download << {
   mkdir buildDir
   vfs {
-    cp "zip:https://github.com/hakimel/reveal.js/archive/"+revealjs_version+".zip!reveal.js-"+revealjs_version, revealjsDir, recursive: true, overwrite: true
+    cp "zip:https://github.com/hakimel/reveal.js/archive/" + revealjs_version + ".zip!reveal.js-" + revealjs_version, revealjsDir, recursive: true, overwrite: true
   }
 
-  if(!adocRevealjsDir.exists()) {
-   Grgit.clone(dir: adocRevealjsDir, uri: 'https://github.com/asciidoctor/asciidoctor-reveal.js')
- }
+  if (!adocRevealjsDir.exists()) {
+    Grgit.clone(dir: adocRevealjsDir, uri: 'https://github.com/asciidoctor/asciidoctor-reveal.js')
+  }
 }
 
-task copyTheme(type:Copy) {
-    dependsOn download
-    from fileTree("$revealjsDir/reveal.js-${revealjs_version}")
-    into revealjsDir
-    from fileTree('src/docs/theme')
-    into file("$revealjsDir/css/theme")
+task copyTheme(type: Copy) {
+  dependsOn download
+  from fileTree("$revealjsDir/reveal.js-${revealjs_version}")
+  into revealjsDir
+  from fileTree('src/docs/theme')
+  into file("$revealjsDir/css/theme")
 }
 
 asciidoctor {
-  if( !buildDir.exists() ) {
+  if (!buildDir.exists()) {
     dependsOn jrubyPrepareGems
     dependsOn download
   }
@@ -94,8 +93,10 @@ asciidoctor {
   }
 
   attributes 'sourcedir': project.sourceSets.main.java.srcDirs[0],
-              imagesoutdir: 'images',
-              revealjs_theme: 's2gx'
+      imagesoutdir: 'images',
+      revealjs_theme: 's2gx'
 
   options template_dirs: [new File(adocRevealjsDir, 'templates/slim').absolutePath]
 }
+
+publishGhPages.dependsOn(asciidoctor)
