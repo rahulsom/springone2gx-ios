@@ -248,6 +248,14 @@ xcodebuild {
 * Spock's expressive testing
 * Groovy's metaprogramming to improve access to DOM
 
+== Continuous Integration
+
+=== Jenkins
+
+=== Immutable slaves
+
+=== Travis CI
+
 == Code
 
 https://github.com/rahulsom/todos-ios/

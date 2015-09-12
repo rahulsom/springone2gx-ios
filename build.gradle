@@ -22,7 +22,16 @@ apply plugin: 'java'
 apply plugin: 'org.asciidoctor.convert'
 apply plugin: 'com.bluepapa32.watch'
 apply plugin: 'uk.co.cacoethes.lazybones-templates'
+apply plugin: 'org.ajoberstar.github-pages'
 
+githubPages {
+    repoUri = 'git@github.com:rahulsom/springone2gx-ios.git'
+    pages {
+        from file("$buildDir/asciidoc/html5")
+    }
+}
+
+publishGhPages.dependsOn(asciidoctor)
 version = '1.0.0'
 
 ext {
@@ -52,11 +61,20 @@ task download << {
  }
 }
 
+task copyTheme(type:Copy) {
+    dependsOn download
+    from fileTree("$revealjsDir/reveal.js-${revealjs_version}")
+    into revealjsDir
+    from fileTree('src/docs/theme')
+    into file("$revealjsDir/css/theme")
+}
+
 asciidoctor {
   if( !buildDir.exists() ) {
     dependsOn jrubyPrepareGems
     dependsOn download
   }
+  dependsOn copyTheme
 
   gemPath = jrubyPrepareGems.outputDir
   requires = ['asciidoctor-diagram']
@@ -77,14 +95,7 @@ asciidoctor {
 
   attributes 'sourcedir': project.sourceSets.main.java.srcDirs[0],
               imagesoutdir: 'images',
-              revealjs_theme: 'white'
+              revealjs_theme: 's2gx'
 
   options template_dirs: [new File(adocRevealjsDir, 'templates/slim').absolutePath]
-}
-
-watch {
-  asciidoc {
-    files fileTree(dir: 'src')
-    tasks 'asciidoctor'
-  }
 }
