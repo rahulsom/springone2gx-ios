@@ -1,0 +1,131 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="author" content="Rahul Somasunderam"><title>Better iOS development with Groovy</title><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link rel="stylesheet" href="reveal.js/css/theme/s2gx.css" id="theme"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><script type="text/javascript">document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script></head><body><div class="reveal"><div class="slides"><section><h2>Better iOS development with Groovy</h2><p><small>Rahul Somasunderam</small></p></section><div id="preamble"><div class="sectionbody"><link rel="stylesheet" href="styles/override.css"></div></div>
+<section id="_about_me"><h2>About me</h2><aside class="notes"><div class="olist arabic"><ol class="arabic"><li><p>Been programming with Java, Groovy, Objective-C</p></li><li><p>lgtm.in, ihe-iti, swaggydoc</p></li><li><p>Web developers vs Android/iOS/griffon developers?</p></li><li><p>Groovy experience vs java developers?</p></li><li><p>How far into the future/past is iOS for you?</p></li><li><p>Who has written Functional tests?</p></li><li><p>Whose employer&#8217;s primary business is developing software?</p></li></ol></div></aside></section>
+<section><section id="_where_i_work"><h2>Where I work</h2><div class="imageblock thumb" style=""><div class="content"><img src="images/BoxCutter.png" alt="BoxCutter"></div></div><aside class="notes"><div class="ulist"><ul><li><p>Transcend insights</p></li><li><p>Used by 130 Health Systems, 600 Hospitals, 20K physicians</p></li><li><p>We love groovy</p></li></ul></div></aside></section><section id="_" data-background="images/Technologies_All.png"><h2>&nbsp;</h2><aside class="notes"><div class="paragraph"><p>This is all the technologies we&#8217;ve had over the years</p></div></aside></section><section id="__2" data-background="images/Technologies_Active.png"><h2>&nbsp;</h2><aside class="notes"><div class="paragraph"><p>This is what&#8217;s survived.</p></div></aside></section></section>
+<section id="_why_ios"><h2>Why iOS?</h2><div class="paragraph"><p>And why at a <em>this</em> conference?</p></div></section>
+<section id="_what_does_it_take_to_build_an_ios_app"><h2>What does it take to build an iOS app?</h2><aside class="notes"><div class="paragraph"><p>So you just heard that you (or your team) will be doing iOS work.
+Also let&#8217;s assume that you want to build a native iOS app.
+Not sencha, phonegap, appcelerator, robovm, ionic.</p></div></aside></section>
+<section id="_xcode_or_appcode"><h2>XCode or AppCode</h2><aside class="notes"><div class="ulist"><ul><li><p>This is often a question of personal preference.</p></li><li><p>XCode is just an editor fitted with some autocomplete and a compiler.</p></li><li><p>AppCode is everything IntelliJ IDEA does (for Objective-C)</p></li><li><p>AppCode support for UI is still not as good as XCode.</p></li></ul></div></aside></section>
+<section id="_swift_vs_objective_c"><h2>Swift vs Objective-C</h2><div class="ulist"><ul><li class="fragment"><p>Tooling</p></li><li class="fragment"><p>Libraries</p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>This is a question of team choices. But you have choices.</p></li><li><p>OCLint is very mature. SwiftLint is rather new.</p></li><li><p>AppCode support for Swift is very basic.</p></li><li><p>A majority of pods out there are still Objective-C and some
+just cannot support Swift.</p></li></ul></div></aside></section>
+<section><section id="_dependency_management"><h2>Dependency management</h2><div class="ulist"><ul><li class="fragment"><p>Libraries vs frameworks</p></li></ul></div></section><section id="__3" data-background="images/matryoshka.jpg"><h2>&nbsp;</h2></section><section id="__4"><h2>&nbsp;</h2><div class="paragraph"><p><em>And I don&#8217;t mean transitive dependencies&#8230;&#8203;</em></p></div></section><section id="_dependencies"><h2>Dependencies</h2><div class="ulist"><ul><li class="fragment"><p>Your app needs dependencies</p></li><li class="fragment"><p>Dependencies can be installed with Cocoapods</p></li><li class="fragment"><p>Cocoapods is a ruby gem</p></li><li class="fragment"><p>Ruby gems can be installed with Bundler</p></li><li class="fragment"><p>You WANT ruby in the user space; so RBENV</p></li><li class="fragment"><p>There is a brew formula for RBENV</p></li><li class="fragment"><p>brew is installed using system ruby</p></li></ul></div></section></section>
+<section><section id="_build_tools"><h2>Build Tools</h2><div class="paragraph"><p>Not 10 bullet points telling you to point and click at things.</p></div></section><section id="__5" data-background="images/firstday.jpg"><h2>&nbsp;</h2></section><section id="_xcodebuild"><h2>XcodeBuild</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">xcodebuild \
+    -scheme Todos \
+    -workspace Todos.xcworkspace \
+    -sdk iphonesimulator \
+    -configuration Debug \
+    DSTROOT=/Users/rahul/src/Todos/build/dst \
+    OBJROOT=/Users/rahul/src/Todos/build/obj \
+    SYMROOT=/Users/rahul/src/Todos/build/sym \
+    SHARED_PRECOMPS_DIR=/Users/rahul/src/Todos/build/shared \
+    -destination \
+    'platform=iOS Simulator,id=CAB835ED-3EE2-47B6-AD74-C06675651CEF' \
+    test</code></pre></div></div></section><section id="_xcodebuild_2"><h2>XcodeBuild</h2><div class="ulist"><ul><li class="fragment"><p>Too complex commands - Unruly bash scripts</p></li><li class="fragment"><p>Different tools for build, upload to testflight, hockeyapp</p></li><li class="fragment"><p>Very little documentation, very steep learning curve</p></li><li class="fragment"><p>What about functional testing?</p></li></ul></div></section><section id="_xctool"><h2>xctool</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">xctool \
+    -workspace Todos.xcworkspace \
+    -sdk iphonesimulator \
+    -scheme Todos \
+    test</code></pre></div></div></section><section id="_xctool_2"><h2>xctool</h2><div class="ulist"><ul><li class="fragment"><p>Written in Objective-C</p></li><li class="fragment"><p>Needs advanced knowledge of Objective-C</p></li><li class="fragment"><p>What about functional testing?</p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Written by facebook</p></li></ul></div></aside></section><section id="_nomad_cli"><h2>Nomad CLI</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">shenzen \
+    -workspace Todos.xcworkspace \
+    -sdk iphonesimulator \
+    -scheme Todos \
+    test</code></pre></div></div></section><section id="_nomad_cli_2"><h2>Nomad CLI</h2><div class="ulist"><ul><li class="fragment"><p>Written in ruby</p></li><li class="fragment"><p>Great support for certificates, distribution profiles</p></li><li class="fragment"><p>Great support for distribution using iTunesConnect</p></li><li class="fragment"><p>What about functional testing?</p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Written by facebook</p></li></ul></div></aside></section><section id="_what_we_need"><h2>What we need</h2><div class="ulist"><ul><li class="fragment"><p>Flexible build system</p></li><li class="fragment"><p>Support for distribution</p></li><li class="fragment"><p>Support for functional testing</p></li><li class="fragment"><p>Easy to install, even if you&#8217;re an enterprise software company</p></li><li class="fragment"><p>Easy to run</p></li></ul></div>
+<aside class="notes"><div class="ulist"><ul><li><p>Time to Yosemite</p></li></ul></div></aside></section><section id="_gradle_xcode_plugin"><h2>Gradle Xcode Plugin</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="gradle language-gradle">buildscript {
+  repositories {
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+  dependencies {
+    classpath "gradle.plugin.org.openbakery:xcodePlugin:0.11.3"
+  }
+}
+apply plugin: "org.openbakery.xcodeplugin"
+xcodebuild {
+  workspace = 'Todos.xcworkspace'
+  scheme = 'Todos'
+  target = 'Todos'
+  sdk = 'iphonesimulator'
+}</code></pre></div></div></section><section id="_gradle_xcode_plugin_2"><h2>Gradle Xcode Plugin</h2><div class="listingblock"><div class="content"><pre class="highlight"><code class="bash language-bash">./gradlew xcodetest
+./gradlew appstoreUpload</code></pre></div></div></section></section>
+<section><section id="_functional_testing"><h2>Functional Testing</h2></section><section id="_uiautomation_using_instruments"><h2>UIAutomation using Instruments</h2><div class="ulist"><ul><li><p>Record and Playback</p></li><li><p>DOM Tree access</p></li><li><p>Refactoring</p></li><li><p>Managing State</p></li><li><p>Tuneup JS? Bwoken?</p></li></ul></div></section><section id="_appium"><h2>Appium</h2><div class="ulist"><ul><li><p>Based on Selenium</p></li><li><p>Clients for several languages including Java</p></li><li><p>Makes your app stateless</p></li></ul></div></section><section id="_groovy_spock"><h2>Groovy + Spock</h2><div class="ulist"><ul><li><p>Spock&#8217;s expressive testing</p></li><li><p>Groovy&#8217;s metaprogramming to improve access to DOM</p></li></ul></div></section></section>
+<section><section id="_continuous_integration"><h2>Continuous Integration</h2></section><section id="_jenkins"><h2>Jenkins</h2></section><section id="_immutable_slaves"><h2>Immutable slaves</h2></section><section id="_travis_ci"><h2>Travis CI</h2></section></section>
+<section id="_code"><h2>Code</h2><div class="paragraph"><p><a href="https://github.com/rahulsom/todos-ios/" class="bare">https://github.com/rahulsom/todos-ios/</a></p></div></section>
+<section id="_thanks"><h2>Thanks</h2></section></div></div><script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script type="text/javascript">// See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+Reveal.initialize({
+  // Display controls in the bottom right corner
+  controls: true,
+  // Display a presentation progress bar
+  progress: true,
+  // Display the page number of the current slide
+  slideNumber: true,
+  // Push each slide change to the browser history
+  history: false,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  previewLinks: false,
+  // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
+  // NOTE setting the theme in the config no longer works in reveal.js 3.x
+  //theme: Reveal.getQueryHash().theme || 's2gx',
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: Reveal.getQueryHash().transition || 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+      { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+});</script></body></html>
