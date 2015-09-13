@@ -25,7 +25,7 @@ apply plugin: 'uk.co.cacoethes.lazybones-templates'
 apply plugin: 'org.ajoberstar.github-pages'
 
 githubPages {
-  repoUri = 'git@github.com:rahulsom/springone2gx-ios.git'
+  repoUri = 'https://github.com/rahulsom/springone2gx-ios.git'
   pages {
     from file("$buildDir/asciidoc/html5")
   }
