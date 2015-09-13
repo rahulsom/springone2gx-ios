@@ -1,5 +1,5 @@
 = Better iOS development with Groovy
-Rahul Somasunderam <rahul.som@gmail.com>
+Rahul Somasunderam (@rahulsom)
 :imagesdir: images
 :sourcedir: snippets
 :revealjs_slideNumber: true
@@ -164,11 +164,8 @@ xctool \
 
 [source,bash]
 ----
-shenzen \
-    -workspace Todos.xcworkspace \
-    -sdk iphonesimulator \
-    -scheme Todos \
-    test
+ios profiles:list --team=ABCDE56789
+ipa build && ipa distribute
 ----
 
 === Nomad CLI
@@ -177,11 +174,16 @@ shenzen \
 * Written in ruby
 * Great support for certificates, distribution profiles
 * Great support for distribution using iTunesConnect
-* What about functional testing?
+* What about testing?
 
 [NOTE.speaker]
 --
-* Written by facebook
+* Written by nshipster guy
+* CUPERTINO - manage apple dev center
+* HOUSTON - Notifications
+* DUBAI - Passbook
+* VENICE - App Store purchase management
+* SHENZEN - build and distribution
 --
 
 === What we need
@@ -227,7 +229,20 @@ xcodebuild {
 ./gradlew appstoreUpload
 ----
 
+[NOTE.speaker]
+--
+* Comparison with js being wrapped by gradle
+* Comparison with CSS
+* Value of submodules
+--
+
 == Functional Testing
+
+[NOTE.speaker]
+--
+* For software that runs on the edge, that's the best way to check if value is delivered.
+* Too many people don't believe in testing because its too hard.
+--
 
 === UIAutomation using Instruments
 
@@ -236,6 +251,11 @@ xcodebuild {
 * Refactoring
 * Managing State
 * Tuneup JS? Bwoken?
+
+[NOTE.speaker]
+--
+* Record and Playback - bad
+--
 
 === Appium
 
@@ -250,14 +270,37 @@ xcodebuild {
 
 == Continuous Integration
 
+[NOTE.speaker]
+--
+* Because developers are too lazy to run tests
+--
+
 === Jenkins
+
+* Cloudbees runs a very old version of OSX and XCode.
+* Bring your own Jenkins and/or Bring your own slaves.
+
+[NOTE.speaker]
+--
+* Why is this hard
+--
+
 
 === Immutable slaves
 
+* There's no Docker for OSX
+* But there is vagrant. [fragment]Kind of
+* You're better off managing slaves as `mutable` instances
+
 === Travis CI
 
-== Code
+* Recently added GA support for XCode
+* Can't run appium yet.
 
-https://github.com/rahulsom/todos-ios/
+== Resources
+
+Code: https://github.com/rahulsom/todos-ios/
+
+Slides: http://rahulsom.github.io/springone2gx-ios/
 
 == Thanks

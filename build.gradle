@@ -96,9 +96,11 @@ asciidoctor {
     }
   }
 
-  attributes 'sourcedir': project.sourceSets.main.java.srcDirs[0],
+  attributes sourcedir: project.sourceSets.main.java.srcDirs[0],
       imagesoutdir: 'images',
-      revealjs_theme: 's2gx'
+      setanchors: 'true',
+      revealjs_theme: 's2gx',
+      revealjs_history: true
 
   options template_dirs: [new File(adocRevealjsDir, 'templates/slim').absolutePath]
 }
