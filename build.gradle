@@ -23,6 +23,7 @@ apply plugin: 'org.asciidoctor.convert'
 apply plugin: 'com.bluepapa32.watch'
 apply plugin: 'uk.co.cacoethes.lazybones-templates'
 apply plugin: 'org.ajoberstar.github-pages'
+apply from: 'gradle/pdf.gradle'
 
 githubPages {
   repoUri = 'https://github.com/rahulsom/springone2gx-ios.git'
